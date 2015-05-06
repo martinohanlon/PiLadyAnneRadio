@@ -75,7 +75,7 @@ sudo dpkg -i python-rpi.gpio_0.5.11-1_armhf.deb
 
 ####py-spidev
 
-sudo apt-get install python2.7-dev
+```sudo apt-get install python2.7-dev
 sudo apt-get install gcc
 mkdir py-spidev
 cd py-spidev
@@ -83,11 +83,11 @@ wget https://github.com/Gadgetoid/py-spidev/archive/master.zip
 unzip master.zip
 rm master.zip
 cd py-spidev-master
-sudo python setup.py install
+sudo python setup.py install```
 
 ##Run
 
-sudo python sourcecode/radiocontrol.py
+```sudo python sourcecode/radiocontrol.py```
 
 ##Version history
 * 0.1 - Initial stable version

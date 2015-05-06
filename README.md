@@ -69,20 +69,30 @@ sudo python setup.py install
 
 ####rPi.GPIO
 
-wget http://sourceforge.net/projects/raspberry-gpio-python/files/raspbian-wheezy/python-rpi.gpio_0.5.11-1_armhf.deb/download
+```wget http://sourceforge.net/projects/raspberry-gpio-python/files/raspbian-wheezy/python-rpi.gpio_0.5.11-1_armhf.deb/download
+
 mv download python-rpi.gpio_0.5.11-1_armhf.deb
-sudo dpkg -i python-rpi.gpio_0.5.11-1_armhf.deb
+
+sudo dpkg -i python-rpi.gpio_0.5.11-1_armhf.deb```
 
 ####py-spidev
 
 ```sudo apt-get install python2.7-dev
+
 sudo apt-get install gcc
+
 mkdir py-spidev
+
 cd py-spidev
+
 wget https://github.com/Gadgetoid/py-spidev/archive/master.zip
+
 unzip master.zip
+
 rm master.zip
+
 cd py-spidev-master
+
 sudo python setup.py install```
 
 ##Run

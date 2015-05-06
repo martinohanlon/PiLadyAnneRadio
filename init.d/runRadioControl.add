@@ -1,0 +1,3 @@
+sudo cp /home/pi/radiocontrol/init.d/runRadioControl /etc/init.d
+sudo update-rc.d runRadioControl defaults
+

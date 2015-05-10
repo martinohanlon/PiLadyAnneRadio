@@ -5,6 +5,7 @@
 #imports
 import RPi.GPIO as GPIO
 import mpd
+
 from time import sleep
 from Queue import Queue
 from threading import Timer
@@ -234,7 +235,7 @@ class RadioControl():
             if self._reconnectMPD():
                 print "MPD reconnected"
                 #rerun function
-                status = self._safeMPDStatus(func, *arg)
+                status = self._safeMPDStatus()
         return status
     
     def _reconnectMPD(self):

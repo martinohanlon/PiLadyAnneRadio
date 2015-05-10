@@ -101,3 +101,5 @@ sudo python sourcecode/radiocontrol.py
 
 ##Version history
 * 0.1 - Initial stable version
+* 0.2 - bug fixes
+

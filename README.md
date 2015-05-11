@@ -31,6 +31,8 @@ For more information see [www.stuffaboutcode.com/p/raspberry-pi-volumio-vintage-
   * skiptrackpause.py - class used to raise events form the rotary encoder
   * volumecontrol.py - class used to raise events from the volume control
 
+* docs - various documents created through the build
+
 ##Install
 
 This assumes you are installing it on a volumio image and using an IQAudio DAC+ / AMP+
@@ -102,4 +104,5 @@ sudo python sourcecode/radiocontrol.py
 ##Version history
 * 0.1 - Initial stable version
 * 0.2 - bug fixes
+* 0.3 - minor improvement to KY040 & added documentation
 

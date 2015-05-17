@@ -105,4 +105,4 @@ sudo python sourcecode/radiocontrol.py
 * 0.1 - Initial stable version
 * 0.2 - bug fixes
 * 0.3 - minor improvement to KY040 & added documentation
-
+* 0.4 - additional error checking and MPD connection keep alive changes

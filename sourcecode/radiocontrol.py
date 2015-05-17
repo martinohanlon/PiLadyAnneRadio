@@ -5,6 +5,7 @@
 #imports
 import RPi.GPIO as GPIO
 import mpd
+import socket
 
 from time import sleep
 from Queue import Queue
@@ -15,6 +16,7 @@ from onoffswitch import OnOffSwitch
 from playlistselector import PlaylistSelector
 from volumecontrol import VolumeControl
 from skiptrackpause import SkipTrackPause
+from mpdkeepalive import MPDKeepAlive
 
 #Constants
 
@@ -124,15 +126,19 @@ class RadioControl():
 
         #create shutdown button control
         self.shutdownButton = ShutdownButton(self.eventQ)
-    
-        #create connection to MPD client / volumio
-        self.mpd = mpd.MPDClient()
-        self.mpd.connect(MPDHOST, MPDPORT)
         
     def start(self):
 
         #turn on led
         self.onLED.on()
+
+        #create connection to MPD client / volumio
+        self.mpd = mpd.MPDClient()
+        self.mpd.connect(MPDHOST, MPDPORT)
+
+        #create the mpd keep alive object
+        mpdKeepAlive = MPDKeepAlive(self.mpd, MPDHOST, MPDPORT)
+        mpdKeepAlive.start()
         
         #start up the controls
         self.onOffSwitch.start()
@@ -160,6 +166,9 @@ class RadioControl():
             self.onOffSwitch.stop()
             self.playlistSwitch.stop()
             self.volControl.stop()
+
+            #stop mpd keep alive
+            mpdKeepAlive.stop()
 
             #turn off led
             self.onLED.off()
@@ -223,6 +232,14 @@ class RadioControl():
                 #rerun function
                 self._safeMPDExec(func, *arg)
 
+        except socket.error as e:
+            print "socket error"
+            #try and reconnect
+            if self._reconnectMPD():
+                print "MPD reconnected"
+                #rerun function
+                self._safeMPDExec(func, *arg)
+
         return success
 
     def _safeMPDStatus(self):
@@ -236,6 +253,15 @@ class RadioControl():
                 print "MPD reconnected"
                 #rerun function
                 status = self._safeMPDStatus()
+
+        except socket.error as e:
+            print "socket error"
+            #try and reconnect
+            if self._reconnectMPD():
+                print "MPD reconnected"
+                #rerun function
+                status = self._safeMPDStatus()
+
         return status
     
     def _reconnectMPD(self):

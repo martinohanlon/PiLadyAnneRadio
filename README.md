@@ -26,6 +26,7 @@ For more information see [www.stuffaboutcode.com/p/raspberry-pi-volumio-vintage-
   * event.py - class to hold a events
   * KY040.py - class for reading a KY0404 rotary encoder module
   * MCP3008.py - class for reading data from an MCP3008 analogue to digital converter
+  * mpdkeepalive.py - class which constantly pings the MPD server to keep the connection alive
   * onoffswitch.py - class used to raise events from the the on/off switch 
   * playlistselector.py - class used to raise events from the playlist selector
   * skiptrackpause.py - class used to raise events form the rotary encoder

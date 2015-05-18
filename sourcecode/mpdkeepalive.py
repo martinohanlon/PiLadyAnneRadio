@@ -1,4 +1,6 @@
 import threading
+import mpd
+import socket 
 from time import sleep
 
 DEFAULT_INTERVAL = 5

@@ -2,15 +2,16 @@ import threading
 import mpd
 import socket 
 from time import sleep
+from event import Event
 
 DEFAULT_INTERVAL = 5
 
 class MPDKeepAlive(threading.Thread):
-    def __init__(self, mpd, mpdHost, mpdPort, interval = DEFAULT_INTERVAL):
+    def __init__(self, eventQ, interval = DEFAULT_INTERVAL):
         #setup threading
         threading.Thread.__init__(self)
         
-        self.mpd = mpd
+        self.eventQ = eventQ
         self.interval = interval
 
         self.running = False
@@ -20,21 +21,7 @@ class MPDKeepAlive(threading.Thread):
         self.running = True
         self.stopped = False
         while(not self.stopped):
-            try:
-                self.mpd.ping()
-                
-            except mpd.ConnectionError as e:
-                print "Ping MPD connection error"
-                #try and reconnect
-                if self._reconnectMPD():
-                    print "MPD reconnected"
-
-            except socket.error as e:
-                print "Ping socket error"
-                #try and reconnect
-                if self._reconnectMPD():
-                    print "MPD reconnected"
-
+            self.eventQ.put(Event(Event.EventType.PINGMPD))
             sleep(self.interval)
 
         self.running = False
@@ -44,12 +31,3 @@ class MPDKeepAlive(threading.Thread):
         while(self.running):
             sleep(0.01)
 
-    def _reconnectMPD(self):
-        #connect to MPD server
-        success = False
-        try:
-            self.mpd.connect(self.mpdHost, self.mpdPort)
-            success = True
-        except:
-            print "Failed to connect to mpd"
-        return success

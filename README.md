@@ -67,7 +67,9 @@ wget https://bootstrap.pypa.io/ez_setup.py -O - | sudo python
 ####python-mpd2
 
 git clone git://github.com/Mic92/python-mpd2.git
+
 cd python-mpd2
+
 sudo python setup.py install
 
 ####rPi.GPIO
@@ -107,3 +109,4 @@ sudo python sourcecode/radiocontrol.py
 * 0.2 - bug fixes
 * 0.3 - minor improvement to KY040 & added documentation
 * 0.4 - additional error checking and MPD connection keep alive changes
+* 0.5 - thread safe issues with mpd keep alive, so changed to use the event Q

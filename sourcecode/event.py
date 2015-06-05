@@ -14,6 +14,7 @@ class Event():
         SKIPTRACK = 5
         PAUSE = 6
         SHUTDOWN = 7
+        PINGMPD = 8
         
     def __init__(self, eventType, value = None):
         self.eventType = eventType

@@ -126,6 +126,9 @@ class RadioControl():
 
         #create shutdown button control
         self.shutdownButton = ShutdownButton(self.eventQ)
+
+        #create the mpd keep alive object
+        self.mpdKeepAlive = MPDKeepAlive(self.eventQ)
         
     def start(self):
 
@@ -136,9 +139,8 @@ class RadioControl():
         self.mpd = mpd.MPDClient()
         self.mpd.connect(MPDHOST, MPDPORT)
 
-        #create the mpd keep alive object
-        mpdKeepAlive = MPDKeepAlive(self.mpd, MPDHOST, MPDPORT)
-        mpdKeepAlive.start()
+        #start up mpd keep alive
+        self.mpdKeepAlive.start()
         
         #start up the controls
         self.onOffSwitch.start()
@@ -168,7 +170,7 @@ class RadioControl():
             self.volControl.stop()
 
             #stop mpd keep alive
-            mpdKeepAlive.stop()
+            self.mpdKeepAlive.stop()
 
             #turn off led
             self.onLED.off()
@@ -213,6 +215,11 @@ class RadioControl():
         elif (event.eventType == Event.EventType.SKIPTRACK):
             print("SKIPTRACK - {}".format(event.value))
             self._skipTrack(event.value)
+
+        #skip track
+        elif (event.eventType == Event.EventType.PINGMPD):
+            #print("PING MPD")
+            self._pingMPD()
             
     def _safeMPDExec(self, func, *arg): 
         success = False
@@ -376,6 +383,9 @@ class RadioControl():
     def _cancelPrevTrackSkip(self):
         #print "track skip cancelled"
         self.prevTrackSkipActive = False
+
+    def _pingMPD(self):
+        self._safeMPDExec(self.mpd.ping)
 
     def _shutdown(self):
         #if there is playlist selected - pause it

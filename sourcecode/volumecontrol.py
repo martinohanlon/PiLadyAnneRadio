@@ -18,24 +18,7 @@ SPICHANNEL = 0
 #how often to refresh the volume
 REFRESHTIME = 0.1
 
-#how low and high the volume control goes
-SPIMINVALUE = 200
-SPIMAXVALUE = 1023
-
-#volume to spi analogue ranges
-VOLUMETOANALOGUE = {0: [0, 0.0, 400.0],
-                    35: [35, 300.0, 500.0],
-                    40: [40, 490.0, 530.0],
-                    45: [45, 520.0, 570.0],
-                    50: [50, 560.0, 625.0],
-                    55: [55, 615.0, 660.0],
-                    60: [60, 640.0, 730.0],
-                    65: [65, 720.0, 850.0],
-                    70: [70, 800.0, 950.0],
-                    75: [75, 900.0, 1000.0],
-                    79: [75, 990.0, 1024.0]}
-
-AVGLENGTH = 15
+AVGLENGTH = 5
 
 class VolumeControl(threading.Thread):
 
@@ -58,14 +41,17 @@ class VolumeControl(threading.Thread):
             self.volume = self._readVolume(volumeDial)
             self._raiseEvents(self.volume)
             
-            lastVolume = self.volume
+            self.lastVolume = self.volume
             while(not self.stopped):
                 self.volume = self._readVolume(volumeDial)
-                #has the volume changed?
-                if lastVolume != self.volume:
+                
+                #has the volume changed by more than 1? This stops the volume flickering between 2 values
+                diff = self.lastVolume - self.volume
+                if diff < 0: diff = diff * -1
+                if diff > 1:
                     #raise an event
                     self._raiseEvents(self.volume)
-                    lastVolume = self.volume
+                    self.lastVolume = self.volume
                  
                 sleep(REFRESHTIME)
                 
@@ -92,16 +78,12 @@ class VolumeControl(threading.Thread):
         return self._convertToVolume(avgData)
 
     def _convertToVolume(self, data):
-        #has the current volume moved outside its SPI range
-        if data < VOLUMETOANALOGUE[self.volume][1] or data > VOLUMETOANALOGUE[self.volume][2]:
-            #find the new range
-            for volumeRange in VOLUMETOANALOGUE:
-                if data > VOLUMETOANALOGUE[volumeRange][1] and data < VOLUMETOANALOGUE[volumeRange][2]:
-                    return VOLUMETOANALOGUE[volumeRange][0]
-        else:
-            return self.volume
+        volume = (data / 1023.0) * 100
+        volume = int(round(volume))
+        return volume
     
     def stop(self):
         self.stopped = True
         while(self.running):
             sleep(0.01)
+

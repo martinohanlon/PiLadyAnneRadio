@@ -58,6 +58,21 @@ Reboot and check its running:
 
 lsmod | grep spi_
 
+###Set as mono
+The lady has only got a single speaker, so I set the alsa output to mono
+
+sudo nano /etc/asound.conf
+
+    pcm.!default makemono
+    pcm.makemono {
+        type route
+        slave.pcm "hw:0"
+        ttable {
+            0.0 1    # in-channel 0, out-channel 0, 100% volume
+            1.0 1    # in-channel 1, out-channel 0, 100% volume
+        }
+    }
+
 ###Install python modules
 
 ####Setuptools
@@ -110,3 +125,4 @@ sudo python sourcecode/radiocontrol.py
 * 0.3 - minor improvement to KY040 & added documentation
 * 0.4 - additional error checking and MPD connection keep alive changes
 * 0.5 - thread safe issues with mpd keep alive, so changed to use the event Q
+* 0.6 - new linear potentiometer

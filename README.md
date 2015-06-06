@@ -40,30 +40,31 @@ This assumes you are installing it on a volumio image and using an IQAudio DAC+ 
 
 ###Enable DAC
 
-sudo nano /boot/config.txt
+    sudo nano /boot/config.txt
 
 add:
 
-dtoverlay=iqaudio-dacplus
+    dtoverlay=iqaudio-dacplus
 
 ###Enable SPI
 
-sudo nano /boot/config.txt
+    sudo nano /boot/config.txt
 
 add:
 
-dtparam=spi=on
+    dtparam=spi=on
 
 Reboot and check its running:
 
-lsmod | grep spi_
+    lsmod | grep spi_
 
 ###Set as mono
 The lady has only got a single speaker, so I set the alsa output to mono
 
-sudo nano /etc/asound.conf
+    sudo nano /etc/asound.conf
 
     pcm.!default makemono
+    
     pcm.makemono {
         type route
         slave.pcm "hw:0"
@@ -77,47 +78,35 @@ sudo nano /etc/asound.conf
 
 ####Setuptools
 
-wget https://bootstrap.pypa.io/ez_setup.py -O - | sudo python
+    wget https://bootstrap.pypa.io/ez_setup.py -O - | sudo python
 
 ####python-mpd2
 
-git clone git://github.com/Mic92/python-mpd2.git
-
-cd python-mpd2
-
-sudo python setup.py install
+    git clone git://github.com/Mic92/python-mpd2.git
+    cd python-mpd2
+    sudo python setup.py install
 
 ####rPi.GPIO
 
-wget http://sourceforge.net/projects/raspberry-gpio-python/files/raspbian-wheezy/python-rpi.gpio_0.5.11-1_armhf.deb/download
-
-mv download python-rpi.gpio_0.5.11-1_armhf.deb
-
-sudo dpkg -i python-rpi.gpio_0.5.11-1_armhf.deb
+    wget http://sourceforge.net/projects/raspberry-gpio-python/files/raspbian-wheezy/python-rpi.gpio_0.5.11-1_armhf.deb/download
+    mv download python-rpi.gpio_0.5.11-1_armhf.deb
+    sudo dpkg -i python-rpi.gpio_0.5.11-1_armhf.deb
 
 ####py-spidev
 
-sudo apt-get install python2.7-dev
-
-sudo apt-get install gcc
-
-mkdir py-spidev
-
-cd py-spidev
-
-wget https://github.com/Gadgetoid/py-spidev/archive/master.zip
-
-unzip master.zip
-
-rm master.zip
-
-cd py-spidev-master
-
-sudo python setup.py install
+    sudo apt-get install python2.7-dev
+    sudo apt-get install gcc
+    mkdir py-spidev
+    cd py-spidev
+    wget https://github.com/Gadgetoid/py-spidev/archive/master.zip
+    unzip master.zip
+    rm master.zip
+    cd py-spidev-master
+    sudo python setup.py install
 
 ##Run
 
-sudo python sourcecode/radiocontrol.py
+    sudo python sourcecode/radiocontrol.py
 
 ##Version history
 * 0.1 - Initial stable version

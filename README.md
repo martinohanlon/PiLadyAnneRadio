@@ -63,6 +63,8 @@ The lady has only got a single speaker, so I set the alsa output to mono
 
     sudo nano /etc/asound.conf
 
+add:
+
     pcm.!default makemono
     
     pcm.makemono {

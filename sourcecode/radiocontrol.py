@@ -335,7 +335,7 @@ class RadioControl():
     def _switchPlaylist(self, playlistname):
         #if a different playlist is playing save it
         if self.playlist != playlistname:
-            if playlistname != None:
+            if self.playlist != None:
                 #save the previous playlist
                 self._savePlaylist(self.playlist)
 

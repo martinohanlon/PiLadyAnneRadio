@@ -18,7 +18,7 @@ SPICHANNEL = 0
 #how often to refresh the volume
 REFRESHTIME = 0.1
 
-AVGLENGTH = 5
+AVGLENGTH = 10
 
 class VolumeControl(threading.Thread):
 

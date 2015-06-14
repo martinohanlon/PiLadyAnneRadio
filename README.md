@@ -117,3 +117,5 @@ add:
 * 0.4 - additional error checking and MPD connection keep alive changes
 * 0.5 - thread safe issues with mpd keep alive, so changed to use the event Q
 * 0.6 - new linear potentiometer
+* 0.7 - minor bug fix
+

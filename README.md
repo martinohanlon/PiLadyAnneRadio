@@ -129,4 +129,4 @@ add:
 * 0.6 - new linear potentiometer
 * 0.7 - minor bug fix
 * 0.8 - made volume the right way round
-
+* 0.9 - fixed paths in scripts

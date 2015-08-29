@@ -18,7 +18,7 @@ case "$1" in
   start)
     echo "Running Radio Control"
     # run application you want to start
-    sudo /home/pi/radiocontrol/scripts/radiocontrol.sh &
+    sudo /home/pi/PiLadyAnneRadio/scripts/radiocontrol.sh &
     ;;
   stop)
     echo "Stopping Radio Control"

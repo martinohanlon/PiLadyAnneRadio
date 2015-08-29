@@ -78,24 +78,32 @@ add:
 
 ###Install python modules
 
+####Update
+
+    sudo apt-get update
+
 ####Setuptools
 
+    cd ~
     wget https://bootstrap.pypa.io/ez_setup.py -O - | sudo python
 
 ####python-mpd2
 
+    cd ~
     git clone git://github.com/Mic92/python-mpd2.git
     cd python-mpd2
     sudo python setup.py install
 
 ####rPi.GPIO
 
+    cd ~
     wget http://sourceforge.net/projects/raspberry-gpio-python/files/raspbian-wheezy/python-rpi.gpio_0.5.11-1_armhf.deb/download
     mv download python-rpi.gpio_0.5.11-1_armhf.deb
     sudo dpkg -i python-rpi.gpio_0.5.11-1_armhf.deb
 
 ####py-spidev
 
+    cd ~
     sudo apt-get install python2.7-dev
     sudo apt-get install gcc
     mkdir py-spidev
@@ -106,9 +114,11 @@ add:
     cd py-spidev-master
     sudo python setup.py install
 
-##Run
+##Download software and Run
 
-    sudo python sourcecode/radiocontrol.py
+    cd ~
+    git clone https://github.com/martinohanlon/PiLadyAnneRadio
+    sudo python ~/PiLadyAnneRadio/sourcecode/radiocontrol.py
 
 ##Version history
 * 0.1 - Initial stable version
@@ -118,4 +128,5 @@ add:
 * 0.5 - thread safe issues with mpd keep alive, so changed to use the event Q
 * 0.6 - new linear potentiometer
 * 0.7 - minor bug fix
+* 0.8 - made volume the right way round
 

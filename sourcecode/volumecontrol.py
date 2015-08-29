@@ -64,6 +64,8 @@ class VolumeControl(threading.Thread):
     def _readVolume(self, volumeDial):
         #read the data
         data = volumeDial.read()
+        #reserve value, so volume is the right way round!
+        data = 1023 - data
 
         #debug
         #print "data = {}".format(data)
